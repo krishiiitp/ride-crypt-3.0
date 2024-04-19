@@ -1,7 +1,7 @@
 export let CarDetails = [
     {
         image : "/uber.png",
-        header : "RideCrypt Go",
+        header : "RC Go",
         price : "₹82.50"
     },
     {

@@ -22,7 +22,6 @@ export default function Home() {
   const polyline = require('@mapbox/polyline');
   const [journey,setJourney]=useState(false);
   const [booked,setBooked]=useState(false)
-
   useEffect(() => {
     function successLocation(position) {
       console.log('Latitude:', position.coords.latitude);
@@ -30,16 +29,13 @@ export default function Home() {
       setLong(position.coords.longitude);
       setLat(position.coords.latitude);
     }
-
     function errorLocation(error) {
       console.error('Error retrieving location:', error);
     }
-
     navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
       enableHighAccuracy: true,
     });
   }, []);
-
   useEffect(() => {
     if (long !== null && lat !== null) {
       mapboxgl.accessToken = api_token;
@@ -60,7 +56,6 @@ export default function Home() {
       directions.on('route', handleRoute);
     }
   }, [long, lat]);
-
   useEffect(() => {
     if (mapRef.current && endLocation) {
       console.log(startLocation);
@@ -95,7 +90,6 @@ export default function Home() {
       });
     }
   }, [endLocation]);
-
   const handleRoute = (event) => {
     const route = event.route[0];
     console.log(route);
@@ -107,7 +101,6 @@ export default function Home() {
       lat: point[1]
     })));
   };
-
   useEffect(() => {
     if (startLocation !== '' && coords !== '' && journey) {
       console.log(coords);
@@ -131,7 +124,6 @@ export default function Home() {
       }, 10);
     }
   }, [startLocation, coords, journey]);
-
   const handleSearch = () => {
     setSearch(true);
   };
