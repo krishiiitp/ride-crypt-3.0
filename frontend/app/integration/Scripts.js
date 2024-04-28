@@ -1,7 +1,7 @@
 const ethers = require("ethers");
 const RPC =
   "https://arbitrum-sepolia.infura.io/v3/b5011aeeab5f40ce986152f75527dcaf";
-const contractAddress = "0xC332AD2C1209F9b0f4FcD620270f7219F818a2cA";
+const contractAddress = "0xC9CF1F17109EDc0168088B509A166B854e38019d";
 const { abi } = require("abi.js");
 
 /**
@@ -42,7 +42,7 @@ export const provider = web3Object.provider;
  * @param {*} topics
  * @returns
  */
-export async function getLogs(eventSignature, topics = [],fromBlock) {
+export async function getLogs(eventSignature, topics = [], fromBlock) {
   const logs = await rpcProvider.getLogs({
     address: contractAddress,
     fromBlock: fromBlock,
@@ -57,7 +57,15 @@ export async function getLogs(eventSignature, topics = [],fromBlock) {
 
 export async function floatProposal(fare, latitute, longtitude) {
   try {
-    const tx = await contractInstance.floatProposal(fare, latitute, longtitude);
+    const fareInWei = ethers.parseUnits(fare.toString(), "wei");
+    const tx = await contractInstance.floatProposal(
+      fareInWei,
+      latitute,
+      longtitude,
+      {
+        value: fareInWei,
+      }
+    );
     await tx.wait();
   } catch (err) {
     return err;
